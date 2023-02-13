@@ -130,3 +130,6 @@ dmypy.json
 
 #xlsx files
 *.xlsx
+
+#PyCharm files
+.idea/
