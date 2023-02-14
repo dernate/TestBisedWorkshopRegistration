@@ -23,7 +23,7 @@ page_structure = [
     ],
     [
         sg.Button(button_text=get_catalog_text("page_select_xlsxfile_testregistration"), key="-BUTTON_TESTREG-"),
-        sg.Button(button_text=get_catalog_text("page_select_xlsxfile_testregerr"), key="-BUTTON_TESTREGERR-", visible=False),
+        sg.Button(button_text=get_catalog_text("page_select_xlsxfile_testregerr"), key="-BUTTON_TESTREGERR-"),
         sg.Button(button_text=get_catalog_text("page_select_xlsxfile_testcontent"), key="-BUTTON_TESTCONTENT-", visible=False)
     ]
 ]

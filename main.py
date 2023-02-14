@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from ui import page_select_xlsxfile, page_testreg
+from ui import page_select_xlsxfile, page_testreg, page_testerr
 from input import load_data
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -39,7 +39,6 @@ if __name__ == "__main__":
     xlsx_fn, xlsx_url_column = "", ""
 
     while True:
-        print("running")
         event, values = window.read()
         if event == "Exit" or event == sg.WIN_CLOSED:
             break
@@ -48,6 +47,10 @@ if __name__ == "__main__":
         elif current_window == WINDOW2:
             page_testreg.handle_events(event, values, window, DRIVER, xlsx_fn, xlsx_url_column)
             changes = None
+        elif current_window == WINDOW3:
+            page_testerr.handle_events(event, values, window, DRIVER, xlsx_fn, xlsx_url_column)
+            changes = None
+            print("1")
         else:
             changes = None
         if changes is not None:
@@ -58,8 +61,8 @@ if __name__ == "__main__":
                 xlsx_fn = values["-TEXTFIELDFILE-"]
                 xlsx_url_column = values["-TEXTFIELDURL-"]
                 window.close()
-                window = sg.Window(current_window, page_testreg.page_structure, finalize=True)
                 if current_window == WINDOW2:
+                    window = sg.Window(current_window, page_testreg.page_structure, finalize=True)
                     presetvalues = {
                         "-TEXTFIELDTEACHER-": 10,
                         "-TEXTFIELDSTUDENTS-": 10,
@@ -70,7 +73,10 @@ if __name__ == "__main__":
                     }
                     page_testreg.set_preset_values(window=window, presetvalues=presetvalues, random_names=True)
                     page_testreg.set_urls(window=window, urls=load_data.xlsx_get_urls(xlsx_fn, xlsx_url_column))
-        print("running2")
+                elif current_window == WINDOW3:
+                    window = sg.Window(current_window, page_testerr.page_structure, finalize=True)
+                    page_testerr.set_preset_values(window=window, presetvalues={}, random_names=True)
+                    page_testerr.set_urls(window=window, urls=load_data.xlsx_get_urls(xlsx_fn, xlsx_url_column))
 
     window.close()
     DRIVER.quit()

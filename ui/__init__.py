@@ -75,6 +75,39 @@ CATALOG = {
     },
     "page_select_xlsxfile_popup_urlheaderwrong": {
         LANGUAGE_GERMAN: "Die Spaltenüberschrift für die URLs ist nicht in der Excel Tabelle zu finden!"
+    },
+    "page_testerr_headertext": {
+        LANGUAGE_GERMAN: "Auf diese URL anwenden:"
+    },
+    "page_testerr_preferences": {
+        LANGUAGE_GERMAN: "Test Einstellungen:"
+    },
+    "page_testerr_checkbox_missing": {
+        LANGUAGE_GERMAN: "Teste mit fehlenden Eingabefeldern"
+    },
+    "page_testerr_checkbox_maildifferent": {
+        LANGUAGE_GERMAN: "Teste mit unterschiedlichen E-Mail Adressen"
+    },
+    "page_testerr_name": {
+        LANGUAGE_GERMAN: "Name:"
+    },
+    "page_testerr_prename": {
+        LANGUAGE_GERMAN: "Vorname:"
+    },
+    "page_testerr_institution": {
+        LANGUAGE_GERMAN: "Institution:"
+    },
+    "page_testerr_email": {
+        LANGUAGE_GERMAN: "E-Mail:"
+    },
+    "page_testerr_email2": {
+        LANGUAGE_GERMAN: "E-Mail Wiederholung:"
+    },
+    "page_testerr_checkbox_randomnames": {
+        LANGUAGE_GERMAN: "Zufällige Namen verwenden"
+    },
+    "page_testerr_start": {
+        LANGUAGE_GERMAN: "Test starten"
     }
 }
 
