@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from ui.errors import ErrWebTest
+from random import shuffle
 
 
 def fill_form(driver: webdriver.Chrome, name: str, prename: str, institution: str, email: str, dropdown_value: int):
@@ -41,13 +42,15 @@ def click_btn(driver: webdriver.Chrome, btn_xpath: str, timeout: int, waitfor_xp
 
 
 def dropdown_values_to_list(teacher: int, students: int, teaching_students: int, lkplus: int, other: int) -> list:
-    values = []
-    values.extend([1] * teacher)
-    values.extend([2] * students)
-    values.extend([3] * teaching_students)
-    values.extend([4] * lkplus)
-    values.extend([5] * other)
-    return values
+    values_teacher = []
+    values_teacher.extend([1] * teacher)
+    values_other = []
+    values_other.extend([2] * students)
+    values_other.extend([3] * teaching_students)
+    values_other.extend([4] * lkplus)
+    values_other.extend([5] * other)
+    shuffle(values_other)
+    return values_teacher + values_other
 
 
 def test_site(driver: webdriver.Chrome, url: str, teacher: int, students: int, teaching_students: int, lkplus: int,
@@ -55,9 +58,14 @@ def test_site(driver: webdriver.Chrome, url: str, teacher: int, students: int, t
     # ToDo: get the dropdown value from the url via hidden browser
     dropdown_values = dropdown_values_to_list(teacher, students, teaching_students, lkplus, other)
     for ddv in dropdown_values:
-        try:
-            driver.get(url)
-        except WebDriverException:
+        retry = 0
+        while retry < 3:
+            try:
+                driver.get(url)
+                break
+            except WebDriverException:
+                retry += 1
+        if retry >= 3:
             return ErrWebTest(True, f"Fehler beim Aufruf der Seite: {url}")
         fill_form(driver, name, prename, institution, email, ddv)
         err = click_btn(

@@ -75,7 +75,7 @@ def set_preset_values(window: sg.Window, presetvalues: dict, random_names: bool)
 
 
 def handle_events(event: str, values: dict, window: sg.Window, driver: webdriver.Chrome, xlsx_fn, xlsx_url_column):
-    if event == "-BUTTONSTART-":
+    if event == "-BUTTONSTARTERR-":
         window.start_thread(func=lambda: start_test(
             driver, load_data.xlsx_get_urls(xlsx_fn, xlsx_url_column),
             bool(values["-CHECKBOXMISSING-"]), bool(values["-CHECKBOXMAILDIFFERENT-"]),
@@ -109,7 +109,7 @@ def set_random_names(random_names: bool):
 
 
 def get_testcases_missing(name: str, prename: str, institution: str, email: str):
-    return [
+    testcase = [
         {
             "name": "",
             "prename": prename,
@@ -132,6 +132,10 @@ def get_testcases_missing(name: str, prename: str, institution: str, email: str)
             "email2": ""
         }
     ]
+    for t in testcase:
+        t.update({"expected_error_msg": "Bitte füllen Sie das Formular vollständig aus und " +
+                                        "klicken Sie erneut auf Anmelden."})
+    return testcase
 
 
 def start_test(driver: webdriver.Chrome, urls: list, test_missing: bool, test_mail_different: bool,
@@ -163,7 +167,10 @@ def start_test(driver: webdriver.Chrome, urls: list, test_missing: bool, test_ma
                     "prename": prename,
                     "institution": institution,
                     "email": email,
-                    "email2": email2
+                    "email2": email2,
+                    "expected_error_msg": "Ihre Mail-Adressen stimmen nicht überein. " +
+                                          "Bitte überprüfen Sie Ihre Angaben und " +
+                                          "klicken Sie erneut auf Anmelden."
                 }], "/html/body/center/h1")
             except Exception as e:
                 sg.popup(f"Fehler beim Testen der Seite: {url}")

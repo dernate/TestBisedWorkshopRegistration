@@ -50,7 +50,6 @@ if __name__ == "__main__":
         elif current_window == WINDOW3:
             page_testerr.handle_events(event, values, window, DRIVER, xlsx_fn, xlsx_url_column)
             changes = None
-            print("1")
         else:
             changes = None
         if changes is not None:

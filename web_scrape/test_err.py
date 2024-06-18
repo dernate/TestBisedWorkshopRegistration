@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from test_reg import click_btn
+from web_scrape.test_reg import click_btn
 from ui.errors import ErrWebTest
 
 
@@ -58,8 +58,6 @@ def test_site(driver: webdriver.Chrome, url: str, testcases: list, expected_resu
         if err.error:
             return err
         errtext = driver.find_element(By.XPATH, "/html/body/center/h1")
-        if errtext.text not in ["Bitte füllen Sie das Formular vollständig aus und klicken Sie erneut auf Anmelden.",
-                                "Ihre Mail-Adressen stimmen nicht überein. Bitte überprüfen Sie Ihre Angaben und "
-                                "klicken Sie erneut auf Anmelden."]:
+        if errtext.text != testcase.get("expected_error_msg", None):
             return ErrWebTest(True, f"Unerwarteter Text: {errtext.text}")
     return ErrWebTest(False)
